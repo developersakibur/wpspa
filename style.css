@@ -1,0 +1,127 @@
+/*
+Theme Name: WP SPA
+Author: developersakibur
+Authore URI: https://developersakibur.com
+Description: A simple SPA-style WordPress theme with left-side menu and AJAX content loading.
+Version: 1.1
+*/
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  background: #f1f1f1;
+}
+
+#spa-wrapper {
+  display: flex;
+  height: 100vh;
+}
+
+/* --- Sidebar & Navigation Menu --- */
+#spa-sidebar {
+  width: 260px;
+  background: #23282d;
+  color: #eee;
+  padding: 1rem 0;
+  transition: width 0.2s;
+  overflow: visible; /* This is crucial for submenus */
+}
+
+#spa-sidebar .menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#spa-sidebar .menu-item {
+    position: relative; /* Needed for submenu positioning */
+}
+
+#spa-sidebar .menu-item a {
+  color: rgba(255, 255, 255, 0.7);
+  display: block;
+  padding: 12px 20px;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s, border-left-color 0.2s;
+  border-left: 4px solid transparent; /* Add transparent border */
+}
+
+/* Style for hover and current page */
+#spa-sidebar .menu-item a:hover,
+#spa-sidebar .current-menu-item > a,
+#spa-sidebar .current-menu-ancestor > a {
+  background: #0073aa;
+  color: #fff;
+  border-left-color: #46b450; /* Highlight color */
+}
+
+/* --- Sub Menu & Grand Sub Menu --- */
+#spa-sidebar .sub-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 100%; /* Position to the right of the parent */
+  width: 220px; /* Set a width for the submenu */
+  background: #2c333a; /* Slightly different background */
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+  z-index: 1001;
+}
+
+/* Show submenu on parent hover */
+#spa-sidebar .menu-item:hover > .sub-menu {
+  display: block;
+}
+
+#spa-sidebar .sub-menu a {
+  padding-left: 20px; /* Reset padding */
+  font-size: 0.9em;
+}
+
+/* Arrow Indicator for Parent Menu Items */
+#spa-sidebar .menu-item-has-children > a::after {
+  content: '\25B8'; /* Right-pointing triangle */
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: color 0.3s;
+  font-size: 0.7em;
+}
+
+#spa-sidebar .menu-item-has-children:hover > a::after {
+    color: #fff;
+}
+
+
+/* --- Main Content Area --- */
+#app-content {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  transition: opacity 0.3s;
+  position: relative;
+}
+
+/* --- Loader --- */
+#loader {
+  display: none;
+  position: absolute; /* Changed from fixed to be relative to #app-content */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #0073aa;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  z-index: 100;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
